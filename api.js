@@ -44,28 +44,32 @@ function createList(waitlist){
         customerInfo.innerHTML = currentperson.name;
         customerInfo.setAttribute("class","customerInfo");
 
+        var buttonContainer = document.createElement("div");
+        buttonContainer.setAttribute("class","buttonContainer");
+
+
+        var tableReadyButton = document.createElement("button");
+        tableReadyButton.innerHTML = "Table Ready";
+        tableReadyButton.setAttribute("class","tableReadyButton");
+        tableReadyButton.setAttribute("onclick","return customerTableReady(this)");
+
         var removeButton = document.createElement("button");
         removeButton.innerHTML = "Remove";
         removeButton.setAttribute("class","removeButton");
         removeButton.setAttribute("onclick","return removeCustomer(this)");
 
+        
         currentWaitlistInfo.push({"id":currentperson.id,"customername":currentperson.name,"email":currentperson.email})
+        buttonContainer.appendChild(tableReadyButton);
+        buttonContainer.appendChild(removeButton);
         customer.appendChild(customerInfo);
-        customer.appendChild(removeButton);
+        customer.appendChild(buttonContainer);
         list.appendChild(customer);
 
       
     }
 }
 
-
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
 
 //Makes POST request to add a new customer into the queue. Customer is automatically added to end of the queue.
 function addCustomer() {
@@ -103,7 +107,7 @@ function clearQueue(){
 
 //Makes DELETE request to the api for a given customer element
 function removeCustomer(button){
-  var customer = button.parentElement;
+  var customer = button.parentElement.parentElement;
   var id = customer.id;
   var deleteBody = getNameEmail(id);
   var customername = deleteBody[0];
@@ -128,6 +132,37 @@ function removeCustomer(button){
 
   return false;
 }
+
+//POST request to https://restaurant-waitlist.herokuapp.com/adminTableReady. Endpoint notifies the user by email
+//and removes them from the list. To be used when staff is ready to seat them.
+function customerTableReady(button){
+  var customer = button.parentElement.parentElement;
+  var id = customer.id;
+  var deleteBody = getNameEmail(id);
+  var customername = deleteBody[0];
+  var customeremail = deleteBody[1];
+
+  var data = {adminkey:"apipassword",name:customername,email:customeremail};
+    fetch('https://restaurant-waitlist.herokuapp.com/adminTableReady', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    console.log(response.json());
+    //Refreshes the queue upon successful promise
+    fetchData();
+  }).catch( error => {
+    console.log(error);
+  })
+  
+  
+
+  return false;
+}
+
+
 
 //iterates through waitlist objects and corresponding info arrays and clears them. Used for deletion and updates to queue
 function clearWaitlist(waitlist){
