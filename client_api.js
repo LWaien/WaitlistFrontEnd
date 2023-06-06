@@ -42,61 +42,20 @@ function createList(waitlist) {
     customerPosition.innerHTML = i + 1;
     customer.appendChild(customerPosition);
 
+    var time = getCurrentTime(currentperson.timestamp);
+
     var customerInfo = document.createElement("div");
-    customerInfo.innerHTML = currentperson.name;
+    customerInfo.innerHTML = currentperson.name + " " + time;
     customerInfo.setAttribute("class", "customerInfo");
-
-    var buttonContainer = document.createElement("div");
-    buttonContainer.setAttribute("class", "buttonContainer");
-
-    var tableReadyButton = document.createElement("button");
-    tableReadyButton.innerHTML = "Table Ready";
-    tableReadyButton.setAttribute("class", "tableReadyButton");
-    tableReadyButton.setAttribute("onclick", "return customerTableReady(this)");
-
-    var removeButton = document.createElement("button");
-    removeButton.innerHTML = "Remove";
-    removeButton.setAttribute("class", "removeButton");
-    removeButton.setAttribute("onclick", "return removeCustomer(this)");
 
     currentWaitlistInfo.push({
       id: currentperson.id,
       customername: currentperson.name,
       email: currentperson.email,
     });
-    buttonContainer.appendChild(tableReadyButton);
-    buttonContainer.appendChild(removeButton);
     customer.appendChild(customerInfo);
-    customer.appendChild(buttonContainer);
     list.appendChild(customer);
   }
-}
-
-//Makes POST request to add a new customer into the queue. Customer is automatically added to end of the queue.
-function addCustomer() {
-  var form = document.getElementById("addCustomerForm");
-  var data = {
-    name: form.name.value,
-    email: form.email.value,
-    adminkey: "apipassword",
-  };
-  fetch("https://restaurant-waitlist.herokuapp.com/adminJoinWaitlist", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      console.log(response.json());
-      fetchData();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  form.reset();
-  return false;
 }
 
 //Makes API request to empty the queue.
@@ -110,71 +69,6 @@ function clearQueue() {
     body: JSON.stringify(data),
   });
   clearWaitlist(currentWaitlist);
-  return false;
-}
-
-//Makes DELETE request to the api for a given customer element
-function removeCustomer(button) {
-  var customer = button.parentElement.parentElement;
-  var id = customer.id;
-  var deleteBody = getNameEmail(id);
-  var customername = deleteBody[0];
-  var customeremail = deleteBody[1];
-
-  var data = {
-    adminkey: "apipassword",
-    name: customername,
-    email: customeremail,
-  };
-  fetch("https://restaurant-waitlist.herokuapp.com/adminRemoveUser", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      console.log(response.json());
-      //Refreshes the queue upon successful promise
-      fetchData();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  return false;
-}
-
-//POST request to https://restaurant-waitlist.herokuapp.com/adminTableReady. Endpoint notifies the user by email
-//and removes them from the list. To be used when staff is ready to seat them.
-function customerTableReady(button) {
-  var customer = button.parentElement.parentElement;
-  var id = customer.id;
-  var deleteBody = getNameEmail(id);
-  var customername = deleteBody[0];
-  var customeremail = deleteBody[1];
-
-  var data = {
-    adminkey: "apipassword",
-    name: customername,
-    email: customeremail,
-  };
-  fetch("https://restaurant-waitlist.herokuapp.com/adminTableReady", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      console.log(response.json());
-      //Refreshes the queue upon successful promise
-      fetchData();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
   return false;
 }
 
@@ -194,4 +88,17 @@ function getNameEmail(targId) {
       return [curr["customername"], curr["email"]];
     }
   }
+}
+
+function getCurrentTime(timestamp) {
+  var time = timestamp.split(" ")[1].split(":");
+  var hours = (time[0] % 12) - 4;
+  if (hours <= 0) {
+    hours = hours + 12;
+  }
+  var minutes = time[1];
+  var currTime = hours + ":" + minutes;
+  return currTime;
+  //optional seconds available
+  //var seconds = time[2].split(".")[0];
 }

@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waitlist </title>
+    <title>Waitlist Admin Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Waitlist</h1>
+        <h1>Admin Page</h1>
+        <button onclick="clearQueue()">Clear Queue</button>
         <button onclick="fetchData()">Load Waitlist</button>
 
+       <form id="addCustomerForm" onSubmit="return addCustomer();">
+
+        <input type="text" id="name" placeholder="Customer Name">
+       
+        <input type="text" id="email" placeholder="Customer Email">
+        <input type="submit" value="+" >
+       </form>
+
     </header>
-    <p>snfjbdfjasbn</p>
     <div id="list">
         
     </div>
-    <script src="client_api.js"></script>
+    <script src="api.js"></script>
 </body>
 </html>
