@@ -1,67 +1,64 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
-    margin:5px;
-    text-align: center;
+  margin: 5px;
+  text-align: center;
 }
 
-h1{
-    font-size: 40px;
-    margin-bottom: 20px;
+h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
 }
 
-
-#list{
-    display: flex;
-    flex-direction: column;
+#list {
+  display: flex;
+  flex-direction: column;
 }
 
-.customerHidden{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    opacity: 0;
-    border-radius: 20px;
-    color: black;
-    width: 35%;
-    padding:0px;
-    margin: 0px auto;
-    transition: background-color 0.5s, color 0.5s;
+.customerHidden {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  border-radius: 20px;
+  color: black;
+  width: 35%;
+  padding: 0px;
+  margin: 0px auto;
+  transition: background-color 0.5s, color 0.5s;
 }
 
-.customer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    color: black;
-    width: 35%;
-    padding:0px;
-    margin: 0px auto;
-    transition: background-color 0.5s, color 0.5s;
+.customer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  color: black;
+  width: 35%;
+  padding: 0px;
+  margin: 0px auto;
+  transition: background-color 0.5s, color 0.5s;
 }
 
-.customer:hover{
-    background-color: #212122;
-    color: white;
-    border: 0px solid black;
-    border-radius: 20px;
-}   
-
-.customerPos .buttonContainer .customerInfo{
-    width: 50px;
-    height: 50px;
+.customer:hover {
+  background-color: #ebebeb;
+  color: rgb(0, 0, 0);
+  border: 0px solid black;
+  border-radius: 20px;
 }
 
-.customerPos{
-    margin-left: 20px;
-    padding:7px;
-    width: 20px;
+.customerPos .buttonContainer .customerInfo {
+  width: 50px;
+  height: 50px;
 }
 
-
+.customerPos {
+  margin-left: 20px;
+  padding: 7px;
+  width: 20px;
+}
 
 /* CSS */
 button {
@@ -69,12 +66,14 @@ button {
   background-color: #414346;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
   box-sizing: border-box;
   color: white;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -91,13 +90,12 @@ button {
 }
 
 button:hover {
-    background-color: #F3F4F6;
-    color: rgb(29, 29, 29);
-    text-decoration: none;
-    transition-duration: 0.1s;
-    opacity: 1;
-  }
-  
+  background-color: #f3f4f6;
+  color: rgb(29, 29, 29);
+  text-decoration: none;
+  transition-duration: 0.1s;
+  opacity: 1;
+}
 
 .removeButton:hover {
   background-color: #a77676;
@@ -108,24 +106,21 @@ button:hover {
 }
 
 .tableReadyButton:hover {
-    background-color: #8bb99f;
-    color: rgb(29, 29, 29);
-    text-decoration: none;
-    transition-duration: 0.1s;
-    opacity: 1;
-  }
-
-  
-
+  background-color: #8bb99f;
+  color: rgb(29, 29, 29);
+  text-decoration: none;
+  transition-duration: 0.1s;
+  opacity: 1;
+}
 
 button:disabled {
-  background-color: #FAFBFC;
+  background-color: #fafbfc;
   border-color: rgba(27, 31, 35, 0.15);
-  color: #959DA5;
+  color: #959da5;
   cursor: default;
 }
 button:active {
-  background-color: #EDEFF2;
+  background-color: #edeff2;
   box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
   transition: none 0s;
 }
@@ -142,47 +137,44 @@ button:-webkit-details-marker {
   display: none;
 }
 
-p{
-    text-align: center;
+p {
+  text-align: center;
 }
 
-#addCustomerForm{
-    margin: 15px auto;
+#addCustomerForm {
+  margin: 15px auto;
 }
 
 #list .customer {
+  opacity: 0;
+  animation: stagger ease-in 0.4s forwards 1;
+  animation-delay: calc(var(--order) * 00.03s);
+}
+
+@keyframes stagger {
+  from {
     opacity: 0;
-    animation: stagger ease-in 0.4s forwards 1;
-    animation-delay: calc(var(--order) * 00.03s);
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes stagger{
-    from{
-        opacity: 0;
-       
-    }
-    to{
-        opacity: 1;
-       
-    }
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 15px;
 }
 
-.buttonContainer{
-    display:flex;
-    justify-content: space-between;
-    margin-right: 15px;
+.removeButton {
+  width: 100%;
+  background-color: #a52a2a;
+  opacity: 0.9;
 }
 
-.removeButton{
-    width: 100%;
-    background-color: #A52A2A;
-    opacity: 0.9;
+.tableReadyButton {
+  width: 100%;
+  margin-right: 5px;
+  background-color: #006400;
+  opacity: 0.9;
 }
-
-.tableReadyButton{
-    width: 100%;
-    margin-right: 5px;
-    background-color:#006400 ;
-    opacity: 0.9;
-}
- 
