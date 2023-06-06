@@ -33,6 +33,7 @@ function createList(waitlist) {
   for (let i = 0; i < waitlist.length; i++) {
     var currentperson = waitlist[i];
     var customer = document.createElement("div");
+
     customer.setAttribute("class", "customer");
     customer.setAttribute("id", currentperson.id);
     customer.style.setProperty("--order", currentperson.id);

@@ -43,7 +43,6 @@ function createList(waitlist) {
     customer.appendChild(customerPosition);
 
     var time = getCurrentTime(currentperson.timestamp);
-
     var customerInfo = document.createElement("div");
     customerInfo.innerHTML = currentperson.name + " " + time;
     customerInfo.setAttribute("class", "customerInfo");
