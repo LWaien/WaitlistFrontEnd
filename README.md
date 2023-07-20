@@ -1,2 +1,2 @@
 # WaitlistFrontEnd
-Simple client front end to interact with waitlist api
+Feel free to download and test out the Waitlist api with this simple front end!
